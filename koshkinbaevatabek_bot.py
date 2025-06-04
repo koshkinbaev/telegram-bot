@@ -10,26 +10,26 @@ user_state = {}
 
 def main_menu_keyboard():
     keyboard = [
-        [InlineKeyboardButton("💻 IT yangiliklar", callback_data='yangilik')],
-        [InlineKeyboardButton("🧠 Foydali maslahatlar", callback_data='maslahat')],
-        [InlineKeyboardButton("📚 IT Resurslar", callback_data='resurs')],
-        [InlineKeyboardButton("📝 Kursga yozilish", callback_data='kurs')],
-        [InlineKeyboardButton("🧪 Test (Quiz)", callback_data='test')],
+        [InlineKeyboardButton("💻 IT jańalıqlar", callback_data='yangilik')],
+        [InlineKeyboardButton("🧠 Paydalı másláhátler", callback_data='maslahat')],
+        [InlineKeyboardButton("📚 IT resurslar", callback_data='resurs')],
+        [InlineKeyboardButton("📝 Kursqa jazılıw", callback_data='kurs')],
+        [InlineKeyboardButton("🧪 Admin haqqında", callback_data='test')],
     ]
     return InlineKeyboardMarkup(keyboard)
 
 def submenu_keyboard(include_next=False, include_back=True):
     keyboard = []
     if include_next:
-        keyboard.append([InlineKeyboardButton("➡️ Keyingi maslahat", callback_data='maslahat')])
+        keyboard.append([InlineKeyboardButton("➡️ Keyingi másláhát", callback_data='maslahat')])
     if include_back:
-        keyboard.append([InlineKeyboardButton("⬅️ Bosh menyuga", callback_data='back_to_menu')])
+        keyboard.append([InlineKeyboardButton("⬅️ Bas menyuǵa", callback_data='back_to_menu')])
     return InlineKeyboardMarkup(keyboard)
 
 # /start komandasi
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "👋 Salom! Bu yerda siz IT bo‘yicha turli ma’lumotlar, maslahatlar, testlar va kurslarga yozilish imkoniyatiga egasiz.",
+        "👋 Assalawma aleykum! Bul jerde siz IT boyınsha hár qıylı maǵlıwmatlar, másláhátler, testler hám kurslarǵa jazılıw imkaniyatına iye bolasız.",
         reply_markup=main_menu_keyboard()
     )
     user_id = update.effective_user.id
@@ -39,9 +39,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # Yangiliklar bo‘limi
 async def send_yangiliklar(update: Update, context: ContextTypes.DEFAULT_TYPE):
     yangiliklar = [
-        "📰 *Microsoft* — AI yordamida Word va Excel'ga kod yozish funksiyasini sinovdan o‘tkazmoqda.",
-        "🍏 *Apple* — WWDC 2025’da iOS 19’ni AI yordami bilan namoyish etadi.",
-        "🔎 *Google* — Gemini sun’iy intellekt platformasini kengaytirishni rejalashtirmoqda."
+        "📰 *Microsoft* - AI járdeminde Ord hám Excelge kod jazıw funkciyasın sınap kórmekte.",
+        "🍏 *Apple* - WWDC 2025'te iOS 19'dı AI járdeminde kórsetedi.",
+        "🔎 *Google* - Gemini jasalma intellekt platformasın keńeytiwdi rejelestirmekte."
     ]
     await update.callback_query.edit_message_text(
         "\n\n".join(yangiliklar),
@@ -121,17 +121,17 @@ async def handle_registration_message(update: Update, context: ContextTypes.DEFA
 # Test bo‘limi (oddiy versiya)
 async def test_section(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.callback_query.edit_message_text(
-        "🧪 Test bo‘limi hali ishlab chiqilmoqda. Yaqinda ishga tushadi!",
+        "🧪 Admin bólimi ele islep shıǵılmaqta. Tez arada iske qosıladı!",
         reply_markup=submenu_keyboard()
     )
     user_state[update.effective_user.id] = 'test'
 
 # Botni qayta boshlash
 async def restart_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.callback_query.edit_message_text("🔄 Bot qayta ishga tushmoqda...")
+    await update.callback_query.edit_message_text("🔄 Bot qayta iske túspekte...")
     await asyncio.sleep(1)
     await update.callback_query.message.reply_text(
-        "✅ Bot ishga tushdi! Quyidagilardan birini tanlang:",
+        "✅ Bot iske tústi! Tómendegilerden birin tańlań.:",
         reply_markup=main_menu_keyboard()
     )
     user_id = update.effective_user.id
@@ -154,13 +154,13 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await test_section(update, context)
     elif data == 'back_to_menu':
         await update.callback_query.edit_message_text(
-            "🏠 Bosh menyuga qaytdingiz. Quyidagilardan birini tanlang:",
+            "🏠 Bas menyuge qayttıńız. Tómendegilerden birin tańlań.:",
             reply_markup=main_menu_keyboard()
         )
         user_state[update.effective_user.id] = None
     else:
         await update.callback_query.edit_message_text(
-            "⚠️ Bu bo‘lim hali mavjud emas.",
+            "⚠️ Bul bólim ele joq.",
             reply_markup=main_menu_keyboard()
         )
 
@@ -173,5 +173,5 @@ if __name__ == '__main__':
     app.add_handler(CallbackQueryHandler(button_handler))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_registration_message))
 
-    print("✅ Bot ishga tushdi...")
+    print("✅ Bot iske tústi...")
     app.run_polling()

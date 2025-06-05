@@ -166,7 +166,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Botni ishga tushurish
 if __name__ == '__main__':
-    TOKEN = "7542519392:AAFYONdclrK-Yi_zDq9osK2dQ_7Q5EXKVHw"
+    TOKEN = "7577002642:AAHu38Gp8ZGSYzpmo8GCLsMRCLMmXipY5qg"
     app = ApplicationBuilder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
